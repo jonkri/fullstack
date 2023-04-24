@@ -4,12 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build-frontend": "npm run --prefix ../frontend build && rm -Rf public && cp -R ../frontend/build public",
+    "dev": "nodemon index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "heroku": "^8.0.5",
+    "nodemon": "^2.0.22"
   }
 }
