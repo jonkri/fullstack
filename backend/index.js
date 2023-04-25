@@ -1,13 +1,31 @@
 const cors = require('cors'),
+  dotenv = require('dotenv'),
   express = require('express'),
-  path = require('path')
+  path = require('path'),
+  { Client } = require('pg')
 
-const app = express()
+// Placerar värdena i objektet `process.env` (som pg använder)
+dotenv.config()
+
+const app = express(),
+  client = new Client({
+    database: process.env.PGDATABASE,
+    host: process.env.PGHOST,
+    password: process.env.PGPASSWORD,
+    port: process.env.PGPORT,
+    user: process.env.PGUSER
+  })
 
 app.use(cors())
 
-app.get('/api', (_request, response) => {
-  response.send({ hello: 'World' })
+client.connect()
+
+app.get('/api', async (_request, response) => {
+  // const { rows } = await client.query('SELECT * FROM cities')
+  const { rows } = await client.query('SELECT * FROM cities WHERE name = $1', [
+    'Stockholm'
+  ])
+  response.send(rows)
 })
 
 app.use(express.static(path.join(path.resolve(), 'public')))
