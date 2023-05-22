@@ -1,8 +1,8 @@
-const cors = require('cors'),
-  dotenv = require('dotenv'),
-  express = require('express'),
-  path = require('path'),
-  { Client } = require('pg')
+import cors from 'cors'
+import dotenv from 'dotenv'
+import express from 'express'
+import path from 'path'
+import { Client } from 'pg'
 
 // Placerar värdena i objektet `process.env` (som pg använder)
 dotenv.config()
@@ -12,7 +12,7 @@ const app = express(),
     database: process.env.PGDATABASE,
     host: process.env.PGHOST,
     password: process.env.PGPASSWORD,
-    port: process.env.PGPORT,
+    port: Number(process.env.PGPORT),
     user: process.env.PGUSER
   })
 
